@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rifal Alsulami | Contact</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="header-left">
+      <h1 class="site-name">Rifal Alsulami</h1>
+      <span class="site-title">IT Student</span>
+    </div>
+
+    <nav class="top-nav">
+      <a href="index.html">CV</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="labs.html">Labs</a>
+      <a href="myworks.html">My Works</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </header>
+
+  <main class="home-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <img src="images/profile.png" alt="Rifal Alsulami" class="profile-image" />
+
+      <section class="contact-box">
+        <h2>Contact</h2>
+
+        <p>
+          Email:
+          <a href="mailto:rifalalsulami@gmail.com">
+            rifalalsulami@gmail.com
+          </a>
+        </p>
+
+        <p>
+          Phone:
+          <a href="tel:0565014971">
+            0565014971
+          </a>
+        </p>
+
+        <div class="social-icons">
+          <a href="https://x.com/reefal_15" target="_blank">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+
+          <a href="https://github.com/RifalAlsulami" target="_blank">
+             <i class="fa-brands fa-github"></i>
+          </a>
+
+
+          <a href="https://www.linkedin.com/in/rifal-alsulami-7318013b5" target="_blank">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+        </div>
+      </section>
+    </aside>
+
+    <!-- CONTENT -->
+    <section class="content-area">
+      <section class="content-section">
+        <h2>Contact Me</h2>
+
+        <!-- FIXED FORM -->
+        <form class="contact-form" action="success.html" method="GET">
+
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="10" required></textarea>
+          </div>
+
+          <div class="radio-group">
+            <span class="radio-title">Message Type:</span>
+
+            <label>
+              <input type="radio" name="type" value="Inquiry" checked />
+              Inquiry
+            </label>
+
+            <label>
+              <input type="radio" name="type" value="Feedback" />
+              Feedback
+            </label>
+          </div>
+
+          <button type="submit" class="button">Send</button>
+        </form>
+
+      </section>
+    </section>
+
+  </main>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 Rifal Alsulami</p>
+  </footer>
+
+</body>
+</html>

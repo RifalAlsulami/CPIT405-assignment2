@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do List App</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="top-header">
+  <div class="header-left">
+    <h1 class="site-name">Rifal Alsulami</h1>
+    <span class="site-title">IT Student</span>
+  </div>
+
+  <nav class="top-nav">
+    <a href="index.html">CV</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="labs.html">Labs</a>
+    <a href="myworks.html" class="active">My Works</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="home-layout">
+
+  <aside class="sidebar">
+    <h2>About This App</h2>
+    <p>
+      A simple To-Do List app built with HTML, CSS, and JavaScript.
+    </p>
+
+    <p>
+      Your tasks are saved in your browser using <strong>localStorage</strong>
+      so they will still be here when you come back.
+    </p>
+
+    <section class="contact-box">
+      <h2>Portfolio Links</h2>
+      <p><a href="myworks.html">← My Works</a></p>
+      <p><a href="app2.html">View App 2</a></p>
+    </section>
+  </aside>
+
+  <section class="content-area">
+    <section class="content-section">
+      <h2>To-Do List</h2>
+
+      <input type="text" id="taskInput" placeholder="Add a new task..." />
+      <button class="button" onclick="addTask()">Add</button>
+
+      <ul id="taskList"></ul>
+
+      <div class="task-footer">
+        <p id="counter">0 of 0 completed</p>
+        <button class="clear-btn" onclick="clearCompleted()">Clear completed</button>
+      </div>
+    </section>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <p>&copy; 2025 Rifal Alsulami</p>
+</footer>
+
+<script>
+let tasks = [];
+
+window.onload = function(){
+  const saved = localStorage.getItem("tasks");
+
+  if(saved){
+    tasks = JSON.parse(saved);
+    renderTasks();
+  }
+};
+
+function addTask(){
+  const input = document.getElementById("taskInput");
+  const text = input.value.trim();
+
+  if(text === ""){
+    alert("Please enter a task!");
+    return;
+  }
+
+  tasks.push({
+    text: text,
+    done: false
+  });
+
+  input.value = "";
+
+  saveTasks();
+  renderTasks();
+}
+
+function renderTasks(){
+  const list = document.getElementById("taskList");
+  list.innerHTML = "";
+
+  tasks.forEach((task, index) => {
+    const li = document.createElement("li");
+
+    if(task.done){
+      li.classList.add("done");
+    }
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.done;
+
+    checkbox.onchange = function(){
+      tasks[index].done = checkbox.checked;
+      saveTasks();
+      updateCount();
+    };
+
+    const span = document.createElement("span");
+    span.textContent = task.text;
+
+    const btn = document.createElement("button");
+    btn.textContent = "×";
+
+    btn.onclick = function(){
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    };
+
+    li.appendChild(checkbox);
+    li.appendChild(span);
+    li.appendChild(btn);
+
+    list.appendChild(li);
+  });
+
+  updateCount();
+}
+
+function updateCount(){
+  const total = tasks.length;
+  const done = tasks.filter(t => t.done).length;
+
+  document.getElementById("counter").textContent =
+    done + " of " + total + " completed";
+}
+
+function clearCompleted(){
+  tasks = tasks.filter(t => !t.done);
+  saveTasks();
+  renderTasks();
+}
+
+function saveTasks(){
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+</script>
+
+</body>
+</html>

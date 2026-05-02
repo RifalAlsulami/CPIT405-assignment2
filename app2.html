@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App 2 - Country Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="top-header">
+  <div class="header-left">
+    <h1 class="site-name">Rifal Alsulami</h1>
+    <span class="site-title">IT Student</span>
+  </div>
+
+  <nav class="top-nav">
+    <a href="index.html">CV</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="labs.html">Labs</a>
+    <a href="myworks.html" class="active">My Works</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="home-layout">
+
+  <aside class="sidebar">
+    <h2>About This App</h2>
+    <p>
+      Search and explore countries using the <strong>REST Countries API</strong>.
+    </p>
+
+    <p>
+      Data is fetched live from:
+      <br>
+      <a href="https://restcountries.com/" target="_blank">restcountries.com</a>
+    </p>
+
+    <section class="contact-box">
+      <h2>Portfolio Links</h2>
+      <p><a href="myworks.html">← My Works</a></p>
+      <p><a href="app1.html">View App 1</a></p>
+    </section>
+  </aside>
+
+  <section class="content-area">
+    <section class="content-section">
+      <h2>Country Explorer</h2>
+
+      <div class="search-box">
+        <input type="text" id="countryInput" placeholder="Search for a country..." />
+        <button onclick="searchCountry()">Search</button>
+      </div>
+
+      <p id="message"></p>
+      <div id="countriesContainer" class="countries-grid"></div>
+    </section>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  <p>&copy; 2025 Rifal Alsulami</p>
+</footer>
+
+<script>
+async function searchCountry() {
+  const input = document.getElementById("countryInput");
+  const countryName = input.value.trim();
+  const message = document.getElementById("message");
+  const container = document.getElementById("countriesContainer");
+
+  container.innerHTML = "";
+
+  if (countryName === "") {
+    message.textContent = "Please enter a country name.";
+    return;
+  }
+
+  message.textContent = "Loading...";
+
+  try {
+    const response = await fetch("https://restcountries.com/v3.1/name/" + countryName);
+
+    if (!response.ok) {
+      throw new Error("Country not found");
+    }
+
+    const countries = await response.json();
+    message.textContent = countries.length + " result(s) found";
+
+    countries.forEach(function(country) {
+      const card = document.createElement("div");
+      card.className = "country-card";
+
+      card.innerHTML = `
+        <img src="${country.flags.png}" alt="${country.name.common} flag">
+        <h3>${country.name.common}</h3>
+
+        <div class="country-info">
+          🏛️ ${country.capital ? country.capital[0] : "N/A"} <br>
+          🌍 ${country.region} <br>
+          👥 ${country.population.toLocaleString()} <br>
+          🗣️ ${country.languages ? Object.values(country.languages).join(", ") : "N/A"}
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (error) {
+    message.textContent = "No country found. Try another name.";
+  }
+}
+
+document.getElementById("countryInput").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    searchCountry();
+  }
+});
+</script>
+
+</body>
+</html>
+
